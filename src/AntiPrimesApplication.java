@@ -1,6 +1,5 @@
 import antiprimes.AntiPrimesSequence;
 import ui.MainWindow;
-
 import javax.swing.*;
 
 
@@ -19,6 +18,7 @@ public class AntiPrimesApplication {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 MainWindow window = new MainWindow(sequence);
+                sequence.setObserver(window);
                 window.setVisible(true);
             }
         });

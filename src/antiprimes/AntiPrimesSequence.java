@@ -7,12 +7,14 @@ import java.util.List;
 /**
  * Represent the sequence of antiprimes found so far.
  */
-public class AntiPrimesSequence {
+public class AntiPrimesSequence{
 
     /**
      * The numbers in the sequence.
      */
-    private List<Number> antiPrimes = new ArrayList<>();
+    private List<Number> antiPrimes;
+    private NumberProcessor processor;
+    private Observer obs;
 
     /**
      * Create a new sequence containing only the first antiprime (the number '1').
@@ -21,11 +23,17 @@ public class AntiPrimesSequence {
         this.reset();
     }
 
+    public void setObserver(Observer obs){
+        this.obs = obs;
+        processor = new NumberProcessor(obs);
+        processor.start();
+    }
+
     /**
      * Clear the sequence so that it contains only the first antiprime (the number '1').
      */
     public void reset() {
-        antiPrimes.clear();
+        antiPrimes = new ArrayList<>();
         antiPrimes.add(new Number(1, 1));
     }
 
@@ -33,8 +41,10 @@ public class AntiPrimesSequence {
      * Find a new antiprime and add it to the sequence.
      */
     public void computeNext() {
-        antiPrimes.add(AntiPrimes.nextAntiPrimeAfter(getLast()));
+        processor.nextAntiPrime(getLast());
+        antiPrimes.add(processor.getNextToProcessor());
     }
+
 
     /**
      * Return the last antiprime found.

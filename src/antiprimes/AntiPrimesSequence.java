@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Represent the sequence of antiprimes found so far.
  */
-public class AntiPrimesSequence{
+public class AntiPrimesSequence implements Observer{
 
     /**
      * The numbers in the sequence.
@@ -16,7 +16,12 @@ public class AntiPrimesSequence{
     private NumberProcessor processor;
     private Observer obs;
 
+    public NumberProcessor getProcessor() {
+        return processor;
+    }
+
     /**
+
      * Create a new sequence containing only the first antiprime (the number '1').
      */
     public AntiPrimesSequence() {
@@ -25,7 +30,7 @@ public class AntiPrimesSequence{
 
     public void setObserver(Observer obs){
         this.obs = obs;
-        processor = new NumberProcessor(obs);
+        processor = new NumberProcessor(this.obs, this);
         processor.start();
     }
 
@@ -42,7 +47,6 @@ public class AntiPrimesSequence{
      */
     public void computeNext() {
         processor.nextAntiPrime(getLast());
-        antiPrimes.add(processor.getNextToProcessor());
     }
 
 
@@ -63,4 +67,10 @@ public class AntiPrimesSequence{
             k = n;
         return antiPrimes.subList(n - k, n);
     }
+
+    @Override
+    public void update() {
+        antiPrimes.add(processor.getNextToProcessor());
+    }
+
 }

@@ -4,12 +4,14 @@ public class NumberProcessor extends Thread{
     private Number out;
     private Number tmp;
     private boolean accept;
-    private Observer obs;
+    private Observer obs1;
+    private Observer obs2;
 
 
-    public NumberProcessor(Observer obs) {
+    public NumberProcessor(Observer obs1, Observer obs2) {
         this.accept = true;
-        this.obs = obs;
+        this.obs1 = obs1;
+        this.obs2 = obs2;
     }
 
     @Override
@@ -17,8 +19,9 @@ public class NumberProcessor extends Thread{
         while(true){
             checkAccept();
             out = AntiPrimes.nextAntiPrimeAfter(tmp);
+            obs2.update();
+            obs1.update();
             acceptRequests();
-            obs.update();
         }
     }
 

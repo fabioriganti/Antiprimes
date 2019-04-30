@@ -43,6 +43,7 @@ public class MainWindow extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 sequence.reset();
+                //sequence.getProcessor().;
                 updateDisplay();
             }
         });
